@@ -1,12 +1,15 @@
 import java.util.*;
 import java.io.*;
-class Bank{
+class Account{
     private String name;
-    private double acc_num;
-    int balance;
-    Bank(String n,double a){
+    private double accnum;
+    private String type;
+    private int balance;
+    int min_balance = 2500;
+    Account(String n,double a,String t){
         name = n;
-        acc_num = a;
+        accnum = a;
+        type = t;
         balance = 0;
         
     }
@@ -18,7 +21,7 @@ class Bank{
         System.out.println("Your balance is " + balance);
     }
     void Withdraw(int x){
-        if(balance-x>0){
+        if(balance-x>min_balance){
             System.out.println("Transaction successful");
             balance -= x;
             System.out.println("Your balance is " + balance);
@@ -27,53 +30,52 @@ class Bank{
             System.out.println("Insuffucient funds");
     }
     void ComputeInterest(){
-        System.out.println("The default interest rate is at 5%");
+        System.out.println("The interest rate is at 8%");
         System.out.println("Your savings is " + balance);
-        System.out.println("The interest accumulated is " + 5*balance/100);       
+        System.out.println("The interest accumulated is " + 8*balance/100);       
     }
-    
+    void checkMin(){
+            System.out.println("Your balance is " + balance);
+            System.out.println("The minimum balance is " + min_balance);
+            if(balance<min_balance)
+               System.out.println("Your balance is below minimum.\nService tax will be applied");
+    }
 }
-class SBI extends Bank{
-    SBI(String n,double a){
-        super(n,a);
+
+class CurrentAccount extends Account{
+    CurrentAccount(String n,double a, String t){
+        super(n,a,t);
     }
     void ComputeInterest(){
-        System.out.println("The interest rate at SBI bank is set as 8% per year");
-        System.out.println("Your savings is " + balance);
-        System.out.println("The interest accumulated per year is " + 8*balance/100);
+        System.out.println("This feature is only available in a saving bank account");
     }
 }
-class ICICI extends Bank{
-    ICICI(String n,double a){
-        super(n,a);
+class SavingsAccount extends Account{
+    SavingsAccount(String n,double a, String t){
+        super(n,a,t);
     }
-    void ComputeInterest(){
-        System.out.println("The interest rate at ICICI bank is set as 7% per year");
-        System.out.println("Your savings is " + balance);
-        System.out.println("The interest accumulated per year is " + 7*balance/100);
+    void checkMin(){
+        System.out.println("This feature is only available in a current bank account");
     }
 }
-class AXIS extends Bank{
-    AXIS(String n,double a){
-        super(n,a);
-    }
-    void ComputeInterest(){
-        System.out.println("The interest rate at AXIS bank is set as 9% per year");
-        System.out.println("Your savings is " + balance);
-        System.out.println("The interest accumulated per year is " + 9*balance/100);
-    }
-}
-public class Q3 {
+
+public class Lab1_Q9 {
     public static void main(String args[]){
-        Bank b;
-        b = new SBI("Alice",1929);
-        b.Deposit(20000);
-        b.ComputeInterest();
-        b = new ICICI("Bob",2202);
-        b.Deposit(30000);
-        b.ComputeInterest();         
-        b = new AXIS("Charlie",3212);
-        b.Deposit(40000);       
-        b.ComputeInterest();
+        CurrentAccount c = new CurrentAccount("Alice",118282,"Current");
+        SavingsAccount s = new SavingsAccount("Bob",192923,"Savings");
+        System.out.println("Current Account:");
+        c.Deposit(20000);
+        c.Withdraw(5000);
+        c.Withdraw(120000);
+        c.checkMin();
+        c.ComputeInterest();
+        c.DisplayBalance();
+        System.out.println("Savings Account:");
+        s.Deposit(20000);
+        s.Withdraw(5000);
+        s.Withdraw(120000);
+        s.checkMin();
+        s.ComputeInterest();
+        s.DisplayBalance();
     }
 }
