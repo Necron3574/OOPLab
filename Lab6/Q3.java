@@ -63,16 +63,17 @@ class AXIS extends Bank{
         System.out.println("The interest accumulated per year is " + 9*balance/100);
     }
 }
-public class Q6 {
+public class Q3 {
     public static void main(String args[]){
-        SBI a = new SBI("Alice",1929);
-        ICICI b = new ICICI("Bob",2202);
-        AXIS c = new AXIS("Charlie",3212);
-        a.Deposit(20000);
-        b.Deposit(30000);
-        c.Deposit(40000);
-        a.ComputeInterest();
+        Bank b;
+        b = new SBI("Alice",1929);
+        b.Deposit(20000);
         b.ComputeInterest();
-        c.ComputeInterest();
+        b = new ICICI("Bob",2202);
+        b.Deposit(30000);
+        b.ComputeInterest();         
+        b = new AXIS("Charlie",3212);
+        b.Deposit(40000);       
+        b.ComputeInterest();
     }
 }
